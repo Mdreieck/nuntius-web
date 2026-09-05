@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nuntius — Alertas de emergencia en el teléfono · MDreieck</title>
+<meta name="author" content="Irving Guerra">
+<meta name="description" content="Nuntius es la aplicación móvil de alertamiento de MDreieck: recibe alertas de emergencia y las muestra a pantalla completa aunque el teléfono esté bloqueado o en silencio.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue: #0B2A5B;
+    --orange: #EA6A1E;
+    --ground: #ffffff;
+    --surface: #f4f6fa;
+    --ink: #14172a;
+    --ink-soft: #4c536e;
+    --ink-faint: #7d859f;
+    --line: #e2e6ef;
+    --sans: 'Archivo', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    --mono: 'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --ground: #0E1014;
+      --surface: #171a21;
+      --ink: #f2f4f8;
+      --ink-soft: #b6bccd;
+      --ink-faint: #838aa0;
+      --line: #262a34;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--ground); color:var(--ink); font-family:var(--sans); line-height:1.6; -webkit-font-smoothing:antialiased; }
+  .wrap { max-width:1040px; margin:0 auto; padding:0 clamp(20px,5vw,40px); }
+  a { color:inherit; }
+
+  /* ── Hero ── */
+  .hero { background:var(--blue); color:#fff; padding:clamp(48px,8vw,86px) 0 clamp(52px,8vw,80px); }
+  .hero .wrap { display:flex; flex-direction:column; align-items:center; text-align:center; }
+  .mark { display:flex; align-items:center; gap:18px; margin-bottom:26px; }
+  .wordmark { font-size:clamp(2rem,6vw,2.9rem); font-weight:800; letter-spacing:.02em; line-height:1; color:var(--orange); }
+  .wordmark span { color:#fff; }
+  .tagline { font-family:var(--mono); font-size:clamp(.62rem,2vw,.76rem); letter-spacing:.28em; color:rgba(255,255,255,.66); margin:0 0 30px; }
+  .hero h1 { font-size:clamp(1.45rem,4.2vw,2.2rem); font-weight:600; line-height:1.28; max-width:22ch; margin:0 0 18px; letter-spacing:-.015em; }
+  .hero p.lead { color:rgba(255,255,255,.78); max-width:56ch; margin:0 0 32px; font-size:clamp(1rem,2.2vw,1.08rem); }
+  .cta { display:inline-flex; align-items:center; gap:10px; background:var(--orange); color:#fff; text-decoration:none;
+         font-weight:600; font-size:1rem; padding:14px 26px; border-radius:99px; transition:transform .15s ease, filter .15s ease; }
+  .cta:hover { transform:translateY(-1px); filter:brightness(1.06); }
+  .cta-note { font-family:var(--mono); font-size:.72rem; letter-spacing:.1em; color:rgba(255,255,255,.55); margin-top:14px; text-transform:uppercase; }
+
+  /* ── Secciones ── */
+  section { padding:clamp(52px,8vw,84px) 0; }
+  .eyebrow { font-family:var(--mono); font-size:.7rem; letter-spacing:.2em; text-transform:uppercase; color:var(--orange); font-weight:500; margin:0 0 12px; }
+  h2 { font-size:clamp(1.4rem,3.4vw,1.85rem); font-weight:700; letter-spacing:-.02em; margin:0 0 16px; line-height:1.2; }
+  .sub { color:var(--ink-soft); max-width:60ch; margin:0 0 40px; }
+
+  .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(238px,1fr)); gap:18px; }
+  .card { background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:24px 22px; }
+  .card h3 { font-size:1.05rem; font-weight:600; margin:0 0 8px; }
+  .card p { color:var(--ink-soft); font-size:.95rem; margin:0; }
+  .card .ico { width:34px; height:34px; margin-bottom:14px; display:block; }
+
+  .shots { display:flex; gap:clamp(16px,3vw,30px); justify-content:center; flex-wrap:wrap; }
+  .shots figure { margin:0; width:min(240px,72vw); }
+  .shots img { width:100%; border-radius:18px; border:1px solid var(--line); display:block; }
+  .shots figcaption { font-family:var(--mono); font-size:.7rem; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-faint); text-align:center; margin-top:12px; }
+
+  .access { background:var(--surface); border:1px solid var(--line); border-radius:16px; padding:clamp(26px,4vw,38px); }
+  .access ol { margin:18px 0 0; padding-left:22px; color:var(--ink-soft); }
+  .access li { margin-bottom:10px; }
+
+  footer { border-top:1px solid var(--line); padding:34px 0 46px; color:var(--ink-faint); font-size:.88rem; }
+  footer .wrap { display:flex; flex-wrap:wrap; gap:14px 26px; align-items:center; justify-content:space-between; }
+  footer a { color:var(--ink-soft); text-decoration:none; border-bottom:1px solid var(--line); }
+  footer a:hover { color:var(--orange); }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="wrap">
+    <div class="mark">
+      <svg width="66" height="66" viewBox="0 0 120 120" aria-hidden="true">
+        <circle cx="60" cy="60" r="52" fill="none" stroke="#fff" stroke-opacity=".22" stroke-width="6"/>
+        <circle cx="60" cy="60" r="36" fill="none" stroke="#fff" stroke-width="10"/>
+        <path d="M60 24 A36 36 0 0 1 96 60" fill="none" stroke="#EA6A1E" stroke-width="10" stroke-linecap="round"/>
+        <circle cx="60" cy="60" r="13" fill="#EA6A1E"/>
+      </svg>
+      <div class="wordmark">NUNTIUS <span>MD</span></div>
+    </div>
+    <p class="tagline">TECNOLOGÍA DE ALERTAMIENTO MÚLTIPLE</p>
+    <h1>La alerta llega aunque el teléfono esté bloqueado</h1>
+    <p class="lead">
+      Aplicación de alertamiento para personal de protección civil y cuerpos de auxilio.
+      Recibe la alerta del centro de monitoreo, la muestra a pantalla completa y permite
+      responder desde el lugar de los hechos.
+    </p>
+    <a class="cta" href="https://play.google.com/apps/internaltest/4701518886017020833">Obtener en Google Play</a>
+    <p class="cta-note">Acceso por invitación · Android</p>
+  </div>
+</div>
+
+<section>
+  <div class="wrap">
+    <p class="eyebrow">Qué hace</p>
+    <h2>Diseñada para el momento en que nadie está mirando el teléfono</h2>
+    <p class="sub">
+      Una emergencia no espera a que alguien desbloquee la pantalla. Cada decisión de la
+      aplicación parte de ahí.
+    </p>
+    <div class="grid">
+      <div class="card">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="#EA6A1E" stroke-width="1.8" stroke-linecap="round"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 8-3 8h18s-3-1-3-8"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+        <h3>Enciende la pantalla y suena</h3>
+        <p>Aunque el dispositivo esté bloqueado, en silencio o en «No molestar». Con lectura en voz alta cuando el operador la configura.</p>
+      </div>
+      <div class="card">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="#EA6A1E" stroke-width="1.8" stroke-linecap="round"><path d="M12 9v4"/><path d="M12 17h.01"/><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>
+        <h3>Gravedad, vigencia e instrucción</h3>
+        <p>Qué pasó, qué tan grave es, quién lo emitió, hasta cuándo sigue vigente y qué hay que hacer. Sin buscar nada.</p>
+      </div>
+      <div class="card">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="#EA6A1E" stroke-width="1.8" stroke-linecap="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <h3>Respuesta desde el lugar</h3>
+        <p>Confirmar recepción, reportar la situación con la ubicación del momento y hasta tres fotografías de evidencia.</p>
+      </div>
+      <div class="card">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="#EA6A1E" stroke-width="1.8" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        <h3>Acceso restringido</h3>
+        <p>Sin registro público. Las cuentas las crea el administrador de cada institución y el equipo se asocia a su servidor con un código.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="shots">
+      <figure>
+        <img src="capturas/02-alerta.png" alt="Alerta de emergencia a pantalla completa con su nivel de gravedad, la instrucción y los botones de respuesta">
+        <figcaption>La alerta</figcaption>
+      </figure>
+      <figure>
+        <img src="capturas/01-alertas.png" alt="Lista de las últimas alertas recibidas, con gravedad, estado y vigencia">
+        <figcaption>Historial</figcaption>
+      </figure>
+      <figure>
+        <img src="capturas/03-detalle.png" alt="Detalle de una alerta con titular, descripción, instrucción y emisor">
+        <figcaption>Detalle</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="access">
+      <p class="eyebrow">Cómo se obtiene</p>
+      <h2 style="margin-bottom:8px">Por invitación de tu institución</h2>
+      <p class="sub" style="margin-bottom:0">
+        La aplicación se distribuye en un programa cerrado: no aparece en la búsqueda de Google Play
+        y solo se instala si tu cuenta está dada de alta.
+      </p>
+      <ol>
+        <li>El administrador del sistema da de alta tu cuenta de Google como participante.</li>
+        <li>Abre el enlace de invitación con esa misma cuenta e instala desde Google Play.</li>
+        <li>Al abrir la aplicación, escribe el <strong>código de acceso</strong> que asocia el teléfono con el servidor de tu institución.</li>
+        <li>Entra con el usuario y la contraseña que te entregó el administrador.</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 MDreieck, S.A. de C.V. · Desarrollado por Irving Guerra</span>
+    <span>
+      <a href="privacidad.html">Aviso de privacidad</a>
+      &nbsp;·&nbsp;
+      <a href="https://sarmex.com.mx">sarmex.com.mx</a>
+    </span>
+  </div>
+</footer>
+
+</body>
+</html>
