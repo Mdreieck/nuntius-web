@@ -72,6 +72,15 @@
   .access ol { margin:18px 0 0; padding-left:22px; color:var(--ink-soft); }
   .access li { margin-bottom:10px; }
 
+  /* Aviso de no afiliación + fuentes oficiales (exigencia de Google Play, sep-2026) */
+  .notice p { color:var(--ink-soft); max-width:70ch; margin:0 0 14px; }
+  .notice p strong { color:var(--ink); }
+  .sources { list-style:none; margin:18px 0 0; padding:0; display:grid; gap:10px; }
+  .sources li { display:flex; flex-wrap:wrap; align-items:baseline; gap:6px 12px; padding:12px 14px; background:var(--ground); border:1px solid var(--line); border-radius:12px; }
+  .sources a { color:var(--ink); text-decoration:none; font-weight:600; border-bottom:1px solid var(--orange); }
+  .sources a:hover { color:var(--orange); }
+  .sources span { font-family:var(--mono); font-size:.72rem; letter-spacing:.06em; color:var(--ink-faint); }
+
   footer { border-top:1px solid var(--line); padding:34px 0 46px; color:var(--ink-faint); font-size:.88rem; }
   footer .wrap { display:flex; flex-wrap:wrap; gap:14px 26px; align-items:center; justify-content:space-between; }
   footer a { color:var(--ink-soft); text-decoration:none; border-bottom:1px solid var(--line); }
@@ -174,9 +183,32 @@
   </div>
 </section>
 
+<section style="padding-top:0" id="aviso">
+  <div class="wrap">
+    <div class="access notice">
+      <p class="eyebrow">Aviso</p>
+      <h2 style="margin-bottom:14px">Nuntius no es una aplicación gubernamental</h2>
+      <p>
+        Nuntius es un producto de <strong>MDreieck, S.A. de C.V.</strong>, empresa privada. Esta
+        aplicación <strong>no es una aplicación oficial</strong> del Gobierno de México ni de ningún
+        gobierno estatal o municipal, no está afiliada a ninguna dependencia pública y no representa a
+        ninguna entidad gubernamental. Las alertas que muestra las emite el centro de monitoreo de la
+        institución que opera el sistema, que es la responsable de su contenido.
+      </p>
+      <p>Para información oficial sobre emergencias y protección civil, consulta directamente a las autoridades:</p>
+      <ul class="sources">
+        <li><a href="https://www.gob.mx/proteccioncivil" rel="noopener">Coordinación Nacional de Protección Civil</a> <span>Gobierno de México · www.gob.mx</span></li>
+        <li><a href="https://www.gob.mx/cenapred" rel="noopener">Centro Nacional de Prevención de Desastres (CENAPRED)</a> <span>Gobierno de México · www.gob.mx</span></li>
+        <li><a href="http://www.ssn.unam.mx" rel="noopener">Servicio Sismológico Nacional</a> <span>UNAM · www.ssn.unam.mx</span></li>
+        <li><a href="https://smn.conagua.gob.mx" rel="noopener">Servicio Meteorológico Nacional</a> <span>CONAGUA · smn.conagua.gob.mx</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
 <footer>
   <div class="wrap">
-    <span>© 2026 MDreieck, S.A. de C.V. · Desarrollado por Irving Guerra</span>
+    <span>© 2026 MDreieck, S.A. de C.V. · Desarrollado por Irving Guerra · <a href="#aviso">No es una app gubernamental</a></span>
     <span>
       <a href="privacidad.html">Aviso de privacidad</a>
       &nbsp;·&nbsp;
